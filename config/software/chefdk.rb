@@ -21,7 +21,6 @@ source git: "git://github.com/chef/chef-dk.git"
 
 relative_path "chef-dk"
 
-
 if windows?
   dependency "ruby-windows"
   dependency "ruby-windows-devkit"
@@ -59,7 +58,7 @@ build do
     # Rubocop pulls in nokogiri 1.5.11, so needs PKG_CONFIG_PATH and
     # NOKOGIRI_USE_SYSTEM_LIBRARIES until rubocop stops doing that
     "PKG_CONFIG_PATH" => "#{install_dir}/embedded/lib/pkgconfig",
-    "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true",
+    "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true"
   )
 
   bundle "install", env: env
@@ -68,8 +67,24 @@ build do
       " --no-ri --no-rdoc" \
       " --verbose", env: env
 
+  whitelist_file /libtermcap.so\..+/
+  whitelist_file /readline.so/
+  whitelist_file /libedit.so\..+/
+  whitelist_file /libedit.so\..+/
+  whitelist_file /libarchive.so\..+/
+  whitelist_file /libncurses.so\..+/
+  whitelist_file /libmenuw.so\..+/
+  whitelist_file /libformw.so\..+/
+  whitelist_file /libpanelw.so\..+/
+  whitelist_file /libform.so\..+/
+  whitelist_file /libmenu.so\..+/
+  whitelist_file /libncursesw.so\..+/
+  whitelist_file /libpanel.so\..+/
+  whitelist_file /libssl.so\..+/
+  whitelist_file /engines\/.*\.so/
+
   appbundle 'berkshelf'
-  appbundle 'chef-dk'
+  appbundle 'chefdk/chef-dk'
   appbundle 'chef-vault'
   appbundle 'foodcritic'
   appbundle 'rubocop'
